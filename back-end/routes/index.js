@@ -5,5 +5,7 @@ module.exports = (app) => {
         health: true
     }))
 
-    app.post('/api/signup', userController.create);
+    app.post('/api/signup', userController.register);
+
+    app.post('api/login', userController.login);
 };
