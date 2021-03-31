@@ -7,5 +7,5 @@ module.exports = (app) => {
 
     app.post('/api/signup', userController.register);
 
-    app.post('api/login', userController.login);
+    app.post('/api/login', userController.login);
 };
