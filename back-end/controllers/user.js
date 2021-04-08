@@ -41,7 +41,7 @@ module.exports = {
                 userId: user._id,
                 token: jwt.sign(
                   { userId: user._id },
-                  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE2MTY5MjU1NTIsImV4cCI6MTY0ODQ2MTU1MiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.-FdIYL1UuKv4Zd81DgLgQnmzmscHRANX7luGXDl8o80',
+                  process.env.TOKEN,
                   { expiresIn: '24h' }
                 )
             });

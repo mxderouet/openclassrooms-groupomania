@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express');
 const logger = require('morgan');
 // const userRoutes = require('./routes/user');
