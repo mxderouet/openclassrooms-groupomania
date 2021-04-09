@@ -14,8 +14,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Post.init({
-    id: DataTypes.STRING,
-    userId: DataTypes.STRING,
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    userId: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
     subject: DataTypes.STRING,
     text: DataTypes.STRING,
     image: DataTypes.STRING,
