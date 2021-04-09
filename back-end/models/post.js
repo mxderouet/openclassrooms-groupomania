@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.myAssociation = models.Post.belongsTo(models.User);
     }
   };
   Post.init({
@@ -24,10 +25,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING
     },
-    subject: DataTypes.STRING,
+    subject: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
     text: DataTypes.STRING,
     image: DataTypes.STRING,
-    post_id: DataTypes.STRING
+    post_id: {
+      allowNull: false,
+      type: DataTypes.INTEGER
+    }
   }, {
     sequelize,
     modelName: 'Post',

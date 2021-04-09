@@ -1,11 +1,21 @@
 const userController = require('../controllers').user
+const postController = require('../controllers').post
 
 module.exports = (app) => {
-    app.get('/api/health', (req, res) => res.status(200).send({
+    // API health check route
+    app.get('/health', (req, res) => res.status(200).send({
         health: true
     }))
 
-    app.post('/api/signup', userController.register);
+    // user's routes
+    app.post('/signup', userController.register);
 
-    app.post('/api/login', userController.login);
+    app.post('/login', userController.login);
+
+    // post's routes
+    app.post('/post/create', postController.createPost);
+
+    app.get('/post/get', postController.getAllPosts);
+
+    app.delete('/post/delete', postController.deletePost);
 };
