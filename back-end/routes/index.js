@@ -12,10 +12,14 @@ module.exports = (app) => {
 
     app.post('/login', userController.login);
 
+	app.delete('/post/delete/:id', userController.deleteUser);
+
     // post's routes
     app.post('/post/create', postController.createPost);
 
     app.get('/post/get', postController.getAllPosts);
 
-    app.delete('/post/delete', postController.deletePost);
+    app.get('/post/get/:id', postController.getOnePost);
+
+    app.delete('/post/delete/:id', postController.deletePost);
 };

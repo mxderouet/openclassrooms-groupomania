@@ -8,8 +8,8 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id: {
-        type: Sequelize.STRING
+      isAdmin: {
+        type: Sequelize.BOOLEAN
       },
       first_name: {
         type: Sequelize.STRING
