@@ -27,7 +27,7 @@ module.exports = {
 					.catch(error => res.status(400).json({ error }));
 	},
 	getOnePost(req, res) {
-			Post.findAll({ where: { id: req.params.id }})
+			Post.findOne({ where: { id: req.params.id }})
 					.then(posts => res.status(200).json(posts))
 					.catch(error => res.status(400).json({ error }));
 	},
