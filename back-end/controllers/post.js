@@ -6,7 +6,7 @@ let postCount = 0;
 module.exports = {
 	async createPost(req, res) {
 			const post = req.body;
-			console.log(post);
+			console.log(req.body);
 			try {
 					await Post.create({
 							userId: post.userId,
@@ -18,6 +18,7 @@ module.exports = {
 					
 					res.status(201).json({ message: 'Post created!' });
 			} catch (error) {
+					console.log(error.message);
 					res.status(400).send(error);
 			}
 	},

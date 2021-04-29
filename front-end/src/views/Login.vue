@@ -17,12 +17,12 @@
       methods: {
         login(){
           axios.post('http://localhost:3000/login', this.form)
-            .then((res) => { console.log(res) })
-            .catch((error) => { console.log(error) })
-            .finally(() => { 
-              console.log('Logged in!')
+            .then(() => {
+              // store TOKEN puis ajouter middleware auth 
               this.$router.push({ name: 'Posts' })
-            });
+              console.log('Logged in!')
+              })
+            .catch((error) => { console.log(error) })
         }
       }
     }
@@ -34,11 +34,11 @@
     <form v-on:submit.prevent="login">
         <div class="form-group">
             <label for="email">Email: </label>
-            <input v-model="email" type="text" name="email" id="email" required>
+            <input v-model="form.email" type="text" name="email" id="email" required>
         </div>
         <div class="form-group">
             <label for="password">Password: </label>
-            <input v-model="email" type="password" name="password" id="password" required>
+            <input v-model="form.password" type="password" name="password" id="password" required>
         </div>
         <input type="submit" value="Login">
     </form>

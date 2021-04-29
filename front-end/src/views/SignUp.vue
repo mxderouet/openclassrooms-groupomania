@@ -14,18 +14,8 @@
         }
       },
       methods: {
-        // mounted() {
-        //   console.log('mail:', this.email)
-        // },
         submitForm(submitEvent){
-          // problème pour récupérer champs du formulaire
-          // https://5balloons.info/post-form-data-to-api-using-axios-in-vuejs/
-          // this.form.first_name = submitEvent.target.elements.name.first_name
-          this.form.last_name = this.last_name
-          this.form.password = this.password
-          this.form.email = this.email
           console.log('form:', this.form)
-          
           console.log('submitEvent:', submitEvent)
           axios.post('http://localhost:3000/signup', this.form)
             .then((res) => { console.log(res) })
@@ -48,7 +38,7 @@
                     <input type="text" class="form-control" id="first" placeholder="Your firstname" v-model="form.first_name">
                 </div>
                 <div class="form-group">
-                    <label for="nlastame">Lastname: </label>
+                    <label for="lastname">Lastname: </label>
                     <input type="text" class="form-control" id="lastname" placeholder="Your lastname" v-model="form.last_name">
                 </div>
                 <div class="form-group">
