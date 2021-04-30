@@ -13,21 +13,23 @@
       },
       methods: {
         createPost(){
-          console.log(this.$refs.userfile)
+          console.log(this.$refs.userfile.files)
           var formData = new FormData();
 
-        formData.append("subject", this.form.subject);
-        formData.append("text", this.form.text);
-        // fichier HTML choisi par l'utilisateur
-        // ajouter multer côté BACK
-        formData.append("userfile", this.$refs.userfile.files[0]);
-          axios.post('http://localhost:3000/post/create', formData)
-            .then((res) => { 
-              console.log(res) 
-              this.$router.push({ name: 'Posts' })
-              console.log('Post created!')
-            })
-            .catch((error) => { console.log(error) })
+          formData.append("subject", this.form.subject);
+          formData.append("text", this.form.text);
+          // fichier HTML choisi par l'utilisateur
+          console.log(this.form.text);
+          formData.append("image", this.$refs.userfile.files[0]);
+          console.log(formData);
+            axios.post('http://localhost:3000/post/create', formData)
+            console.log('ICI')
+              .then((res) => { 
+                console.log(res) 
+                this.$router.push({ name: 'Posts' })
+                console.log('Post created!')
+              })
+            .catch((error) => { console.log(error.message) })
         }
       }
     }
@@ -40,8 +42,6 @@
         Feel free to share with the community what is on your mind to day
     </p>
         <form v-on:submit.prevent="createPost" enctype="multipart/form-data">
-        // faire form multipart avec axios
-        // https://developer.mozilla.org/fr/docs/Web/API/FormData/Using_FormData_Objects
         <div class="form-group">
           <label for="subject">Subject: </label>
           <input v-model="form.subject" type="text" name="subject" id="subject" required>   

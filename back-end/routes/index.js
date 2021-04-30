@@ -1,3 +1,4 @@
+const multer = require('multer');
 const userController = require('../controllers').user
 const postController = require('../controllers').post
 
@@ -15,11 +16,13 @@ module.exports = (app) => {
 	app.delete('/post/delete/:id', userController.deleteUser);
 
     // post's routes
-    app.post('/post/create', postController.createPost);
+    app.post('/post/create', multer, postController.createPost);
 
     app.get('/post/get', postController.getAllPosts);
 
     app.get('/post/get/:id', postController.getOnePost);
 
     app.delete('/post/delete/:id', postController.deletePost);
+
+    app.put('post/edit/:id', multer, postController.editPost);
 };

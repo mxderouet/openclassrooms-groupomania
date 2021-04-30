@@ -23,20 +23,35 @@ module.exports = {
 			}
 	},
 	getAllPosts(req, res) {
-			Post.findAll()
-					.then(posts => res.status(200).json(posts))
-					.catch(error => res.status(400).json({ error }));
+		Post.findAll()
+				.then(posts => res.status(200).json(posts))
+				.catch(error => res.status(400).json({ error }));
 	},
 	getOnePost(req, res) {
-			Post.findOne({ where: { id: req.params.id }})
-					.then(posts => res.status(200).json(posts))
-					.catch(error => res.status(400).json({ error }));
+		Post.findOne({ where: { id: req.params.id }})
+				.then(posts => res.status(200).json(posts))
+				.catch(error => res.status(400).json({ error }));
 	},
 	deletePost(req, res) {
-			Post.destroy({ where: { id: req.params.id }})
-					.then(() => res.status(200).json({ message: 'Post deleted!'}))
+		Post.findOne({ where: { id: req.params.id }})
+			.then(post => {
+			const filename = post.imageUrl.split('/images/')[1];
+	      	fs.unlink(`images/${filename}`, () => {
+				Post.destroy({ where: { id: req.params.id }})
+				.then(() => res.status(200).json({ message: 'Post deleted!'}))
 					.catch(error => res.status(400).json({ error }));
-	//       const filename = post.imageUrl.split('/images/')[1];
-	//       fs.unlink(`images/${filename}`, () => {
+			});
+		})
+		.catch(error => res.stats(400).json({ error }));
+	},
+	editPost(req, res) {
+		const postObject = req.file ?
+		{
+		  ...JSON.parse(req.body.post),
+		  imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+		} : { ...req.body };
+	  Post.save({ _id: req.params.id }, { ...postObject, _id: req.params.id })
+		.then(() => res.status(200).json({ message: 'Object modified!'}))
+		.catch(error => res.status(400).json({ error }));
 	}
 };
