@@ -46,9 +46,9 @@ export default {
     </p>
     <button><router-link to="/create">Reply to post</router-link></button>
 		<br>
-    <button><router-link to="/edit">Edit post</router-link></button>
+    <button><router-link :to="'/post/edit/' + post.id">Edit post</router-link></button>
 		<br>
-    <button><router-link to="/delete">Delete post</router-link></button>
+    <button><router-link :to="'/post/delete/' + post.id">Delete post</router-link></button>
   </div>
 </template>
 

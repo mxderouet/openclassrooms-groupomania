@@ -2,11 +2,20 @@
 <script>
 const axios = require('axios');
 export default {
+  name: "DeletePost",
+  mounted() {
+    const id = this.$route.params.id;
+    console.log(id);
+  },
   methods: {
     async deletePost(res){
+      // const id = this.$route.params.id;
+      console.log(this.$route.params.id);
       try {
-        const res = await axios.delete('http://localhost:3000/post/delete/:id');
+        const res = await axios.delete(`http://localhost:3000/post/delete/${this.$route.params.id}`);
+        // console.log(id);
         console.log(res.status);
+        this.$router.push({ name: "Posts"});
       } catch (error) {
         console.log(error.message);
         res.status(400).send(error);
@@ -23,7 +32,7 @@ export default {
     <button><router-link to="/posts">No, go back to posts</router-link></button>
     <br />
     <button v-on:click.prevent="deletePost">
-      <router-link to="/posts">Yes, delete posts</router-link>
+      Yes, delete posts
     </button>
   </div>
 </template>

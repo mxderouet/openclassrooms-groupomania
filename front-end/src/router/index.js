@@ -43,12 +43,12 @@ const routes = [
     component: CreatePost
   },
   {
-    path: '/edit',
+    path: '/post/edit/:id',
     name: 'EditPost',
     component: EditPost
   },
   {
-    path: '/delete',
+    path: '/post/delete/:id',
     name: 'DeletePost',
     component: DeletePost
   }
