@@ -1,7 +1,4 @@
 // ./components/Login.vue
-// use reponse.data
-// same for sign up with POST
-// modify header with auth KEY
 <script>
     const axios = require('axios');
     export default {
@@ -17,9 +14,10 @@
       methods: {
         login(){
           axios.post('http://localhost:3000/login', this.form)
-            .then(() => {
-              // store TOKEN puis ajouter middleware auth 
+            .then((res) => {
               this.$router.push({ name: 'Posts' })
+              this.$router.token = res.data.token
+              localStorage.setItem('token', res.data.token)
               console.log('Logged in!')
               })
             .catch((error) => { console.log(error) })

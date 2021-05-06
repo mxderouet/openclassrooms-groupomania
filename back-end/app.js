@@ -3,8 +3,7 @@ require('dotenv').config()
 const express = require('express');
 const logger = require('morgan');
 // const userRoutes = require('./routes/user');
-// const path = require('path');
-
+const path = require('path');
 
 const app = express();
 
@@ -29,7 +28,7 @@ models.sequelize.sync().then(function() {
 
 require('./routes')(app);
 
-
+app.use('/images', express.static(path.join(__dirname, 'images')));
 // app.use('/api/auth', userRoutes);
 
 module.exports = app;

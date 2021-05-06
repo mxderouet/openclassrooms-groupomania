@@ -25,7 +25,7 @@ module.exports = {
 			const password = req.body.password;
 			console.log(req.body);
 			if (!email || !password) {
-					return res.status(400).send('Request missing username or password param');
+				return res.status(400).send('Request missing username or password param');
 			}
 			User.findOne({where: { email: req.body.email }})
 		.then(user => {
@@ -38,9 +38,9 @@ module.exports = {
 						return res.status(401).json({ error: 'Wrong credentials!' });
 					}
 					res.status(200).json({
-							userId: user._id,
+							userId: user.id,
 							token: jwt.sign(
-								{ userId: user._id },
+								{ userId: user.id },
 								process.env.TOKEN,
 								{ expiresIn: '24h' }
 							)

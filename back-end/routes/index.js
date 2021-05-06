@@ -1,6 +1,7 @@
-const multer = require('multer');
-const userController = require('../controllers').user
-const postController = require('../controllers').post
+const multer = require('../middleware/multer-config');
+const auth = require('../middleware/auth');
+const userController = require('../controllers').user;
+const postController = require('../controllers').post;
 
 module.exports = (app) => {
     // API health check route
@@ -13,16 +14,16 @@ module.exports = (app) => {
 
     app.post('/login', userController.login);
 
-	app.delete('/post/delete/:id', userController.deleteUser);
+    app.delete('/post/delete/:id', userController.deleteUser);
 
     // post's routes
-    app.post('/post/create', multer, postController.createPost);
+    app.post('/post/create', auth, multer, postController.createPost);
 
-    app.get('/post/get', postController.getAllPosts);
+    app.get('/post/get', auth, postController.getAllPosts);
 
-    app.get('/post/get/:id', postController.getOnePost);
+    app.get('/post/get/:id', auth, postController.getOnePost);
 
     app.delete('/post/delete/:id', postController.deletePost);
 
-    app.put('post/edit/:id', multer, postController.editPost);
+    app.put('post/edit/:id', auth, multer, postController.editPost);
 };

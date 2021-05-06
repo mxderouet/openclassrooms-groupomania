@@ -6,6 +6,8 @@ import Login from '../views/Login.vue'
 import PostDetail from '../views/PostDetail.vue'
 import Posts from '../views/Posts.vue'
 import CreatePost from '../views/CreatePost.vue'
+import EditPost from '../views/EditPost.vue'
+import DeletePost from '../views/DeletePost.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +41,16 @@ const routes = [
     path: '/create',
     name: 'CreatePost',
     component: CreatePost
+  },
+  {
+    path: '/edit',
+    name: 'EditPost',
+    component: EditPost
+  },
+  {
+    path: '/delete',
+    name: 'DeletePost',
+    component: DeletePost
   }
 ]
 

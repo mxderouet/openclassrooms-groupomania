@@ -5,22 +5,21 @@ let postCount = 0;
 
 module.exports = {
 	async createPost(req, res) {
-			const post = req.body;
-			console.log(req.body);
-			try {
-					await Post.create({
-							userId: post.userId,
-							subject: post.subject,
-							text: post.text ?? undefined,
-							image: undefined,
-							post_id: postCount +=1
-					})
-					
-					res.status(201).json({ message: 'Post created!' });
-			} catch (error) {
-					console.log(error.message);
-					res.status(400).send(error);
-			}
+		const post = req.body;
+		try {
+				await Post.create({
+					userId: req.userId,
+					subject: post.subject,
+					text: post.text ?? undefined,
+					image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+					post_id: postCount +=1
+				})
+				
+				res.status(201).json({ message: 'Post created!' });
+		} catch (error) {
+				console.log(error.message);
+				res.status(400).send(error);
+		}
 	},
 	getAllPosts(req, res) {
 		Post.findAll()

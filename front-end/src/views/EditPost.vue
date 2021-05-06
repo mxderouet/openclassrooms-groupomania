@@ -1,8 +1,8 @@
-// ./components/CreatePost.vue
+// ./components/EditPost.vue
 <script>
     const axios = require('axios');
     export default {
-      name: 'CreatePost',
+      name: 'EditPost',
         data() { 
         return { 
           form: {
@@ -12,15 +12,15 @@
         }
       },
       methods: {
-        createPost(){
+        editPost(){
           var formData = new FormData();
           const token = localStorage.getItem('token');
           formData.append("subject", this.form.subject);
           formData.append("text", this.form.text);
           formData.append("image", this.$refs.userfile.files[0]);
           axios({
-            method: "post",
-            url: 'http://localhost:3000/post/create',
+            method: "put",
+            url: 'http://localhost:3000/post/edit',
             data: formData,
             headers: { 
               "Content-Type": "multipart/form-data",
@@ -29,7 +29,7 @@
           })
               .then(() => { 
                 this.$router.push({ name: 'Posts' })
-                console.log('Post created!')
+                console.log('Post updated!')
               })
             .catch((error) => { console.log(error.message) })
         }
@@ -38,12 +38,12 @@
 </script>
 
 <template>
-  <div class="create-post">
-    <h1>Create your post here</h1>
+  <div class="edit-post">
+    <h1>Edit your post here</h1>
     <p>
-        Feel free to share with the community what is on your mind to day
+        You can edit your post on this page
     </p>
-        <form v-on:submit.prevent="createPost" enctype="multipart/form-data">
+        <form v-on:submit.prevent="editPost" enctype="multipart/form-data">
         <div class="form-group">
           <label for="subject">Subject: </label>
           <input v-model="form.subject" type="text" name="subject" id="subject" required>   
@@ -56,7 +56,7 @@
           <label for="image">Image: </label>
           <input type="file" name="image" id="image" ref="userfile" required>
         </div>
-        <input type="submit" value="Submit post">
+        <input type="submit" value="Edit post">
     </form>
   </div>
 </template>
