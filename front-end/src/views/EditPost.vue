@@ -20,7 +20,7 @@
           formData.append("image", this.$refs.userfile.files[0]);
           axios({
             method: "put",
-            url: 'http://localhost:3000/post/edit',
+            url: `http://localhost:3000/post/edit/${this.$route.params.id}`,
             data: formData,
             headers: { 
               "Content-Type": "multipart/form-data",

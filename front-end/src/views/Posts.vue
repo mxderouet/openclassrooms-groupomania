@@ -3,6 +3,7 @@
 const axios = require("axios");
 export default {
   name: "PostDetail",
+
   data() {
     return { posts: [] };
   },
@@ -17,6 +18,7 @@ export default {
         this.posts = response.data;
       })
       .catch((error) => {
+        console.log(error.message)
         if (error.response.status === 401) {
           this.$router.push({ name: "Login" });
         }
@@ -42,7 +44,7 @@ export default {
         <br />
         Written by: {{ post.userId }}
         <br />
-        Created at: {{ post.createdAt.slice(0, -5) }}
+        Created at: {{ post.createdAt }}
       </p>
       <router-link :to="'/post/get/' + post.id">See post details</router-link>
     </div>

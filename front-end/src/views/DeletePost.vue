@@ -1,24 +1,20 @@
 // ./components/DeletePost.vue
 <script>
 const axios = require('axios');
+const token = localStorage.getItem("token");
 export default {
   name: "DeletePost",
-  mounted() {
-    const id = this.$route.params.id;
-    console.log(id);
-  },
   methods: {
-    async deletePost(res){
-      // const id = this.$route.params.id;
+    async deletePost(){
       console.log(this.$route.params.id);
       try {
-        const res = await axios.delete(`http://localhost:3000/post/delete/${this.$route.params.id}`);
-        // console.log(id);
-        console.log(res.status);
+        const res = await axios.delete(`http://localhost:3000/post/delete/${this.$route.params.id}`, { 
+          headers: { Authorization: `Bearer: ${token}` },
+        });
+        console.log("Post deleted, status:", res.status);
         this.$router.push({ name: "Posts"});
       } catch (error) {
         console.log(error.message);
-        res.status(400).send(error);
       }
     }
   }

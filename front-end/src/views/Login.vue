@@ -18,6 +18,7 @@
               this.$router.push({ name: 'Posts' })
               this.$router.token = res.data.token
               localStorage.setItem('token', res.data.token)
+              localStorage.setItem('userId', res.data.userId)
               console.log('Logged in!')
               })
             .catch((error) => { console.log(error) })

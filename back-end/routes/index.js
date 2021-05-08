@@ -14,7 +14,7 @@ module.exports = (app) => {
 
     app.post('/login', userController.login);
 
-    app.delete('/post/delete/:id', userController.deleteUser);
+    app.delete('/user/delete/:id', userController.deleteUser);
 
     // post's routes
     app.post('/post/create', auth, multer, postController.createPost);
@@ -23,7 +23,7 @@ module.exports = (app) => {
 
     app.get('/post/get/:id', auth, postController.getOnePost);
 
-    app.delete('/post/delete/:id', postController.deletePost);
+    app.delete('/post/delete/:id', auth, postController.deletePost);
 
-    app.put('post/edit/:id', auth, multer, postController.editPost);
+    app.put('/post/edit/:id', auth, multer, postController.editPost);
 };

@@ -5,6 +5,8 @@ export default {
   name: "PostDetail",
   data() {
     return {
+      isAdmin: 0,
+      userId: 0,
       post: {
         subject: "",
         text: "",
@@ -13,13 +15,14 @@ export default {
   },
   mounted() {
     const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+    this.userId = userId;
     const id = this.$route.params.id;
     const url = `http://localhost:3000/post/get/${id}`;
     axios
       .get(url, { headers: { Authorization: `Bearer ${token}` } })
       .then((response) => {
         this.post = response.data;
-        console.log(this.post);
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -42,13 +45,13 @@ export default {
       <br>
       Written by: {{ post.userId }}
       <br>
-      Created at: {{ post.createdAt.slice(0, -5) }}
+      Created at: {{ post.createdAt }}
     </p>
     <button><router-link to="/create">Reply to post</router-link></button>
 		<br>
-    <button><router-link :to="'/post/edit/' + post.id">Edit post</router-link></button>
+    <button v-if="isAdmin === 1 || userId === post.userId"><router-link :to="'/post/edit/' + post.id">Edit post</router-link></button>
 		<br>
-    <button><router-link :to="'/post/delete/' + post.id">Delete post</router-link></button>
+    <button v-if="isAdmin === 1 || userId === post.userId"><router-link :to="'/post/delete/' + post.id">Delete post</router-link></button>
   </div>
 </template>
 
