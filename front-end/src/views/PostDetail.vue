@@ -5,16 +5,22 @@ export default {
   name: "PostDetail",
   data() {
     return {
-      isAdmin: 0,
+      userInfos: {},
       userId: 0,
       post: {
         subject: "",
         text: "",
       },
+      comments: []
     };
   },
   mounted() {
     const token = localStorage.getItem("token");
+    axios
+      .get('http://localhost:3000/user/infos', { headers: { Authorization: `Bearer ${token}` } })
+      .then((response) => {
+        this.userInfos = response.data;
+      })
     const userId = localStorage.getItem("userId");
     this.userId = userId;
     const id = this.$route.params.id;
@@ -22,9 +28,11 @@ export default {
     axios
       .get(url, { headers: { Authorization: `Bearer ${token}` } })
       .then((response) => {
-        this.post = response.data;
+        this.post = response.data.post;
+        this.comments = response.data.comments;
       })
       .catch((error) => {
+        console.log(error.message);
         if (error.response.status === 401) {
           this.$router.push({ name: "Login" });
         }
@@ -41,7 +49,7 @@ export default {
     </p>
     <img :src="post.image" />
     <p>
-      Post <strong>#{{ post.post_id }}</strong>
+      Post <strong>#{{ post.id }}</strong>
       <br>
       Written by: {{ post.userId }}
       <br>
@@ -49,9 +57,14 @@ export default {
     </p>
     <button><router-link to="/create">Reply to post</router-link></button>
 		<br>
-    <button v-if="isAdmin === 1 || userId === post.userId"><router-link :to="'/post/edit/' + post.id">Edit post</router-link></button>
+    <button v-if="userInfos.isAdmin || userId === post.userId"><router-link :to="'/post/edit/' + post.id">Edit post</router-link></button>
 		<br>
-    <button v-if="isAdmin === 1 || userId === post.userId"><router-link :to="'/post/delete/' + post.id">Delete post</router-link></button>
+    <button v-if="userInfos.isAdmin || userId === post.userId"><router-link :to="'/post/delete/' + post.id">Delete post</router-link></button>
+    <div v-for="comment in comments" :key="comment.id">
+      <p>
+        {{ comment.subject }}
+      </p>
+    </div>
   </div>
 </template>
 

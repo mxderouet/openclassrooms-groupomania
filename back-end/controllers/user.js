@@ -54,6 +54,20 @@ module.exports = {
 		User.destroy({ where: { id: req.params.id }})
 		.then(() => res.status(200).json({ message: 'User deleted!'}))
 		.catch(error => res.status(400).json({ error }));
+	},
+	userInfos(req, res) {
+		User.findOne({where: { id: req.userId }})
+		.then(user => {
+			if (!user) {
+				return res.status(401).json({ error: 'User not found!' });
+			}
+			return res.status(200).json({ 
+				first_name: user.first_name, 
+				last_name: user.last_name, 
+				email: user.email, 
+				isAdmin: user.isAdmin 
+			})
+		})
 	}
 };
 

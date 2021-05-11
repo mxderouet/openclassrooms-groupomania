@@ -7,7 +7,7 @@ module.exports = {
   async createPost(req, res) {
     const post = req.body;
     try {
-      const postCount = Object.keys(await Post.findAll()).length;
+      // const postCount = Object.keys(await Post.findAll()).length;
       await Post.create({
         userId: req.userId,
         subject: post.subject,
@@ -15,7 +15,7 @@ module.exports = {
         image: `${req.protocol}://${req.get("host")}/images/${
           req.file.filename
         }`,
-        post_id: postCount ?? 1,
+        post_id: 0
       });
 
       res.status(201).json({ message: "Post created!" });
@@ -29,10 +29,15 @@ module.exports = {
       .then((posts) => res.status(200).json(posts))
       .catch((error) => response.status(400).json({ error }));
   },
-  getOnePost(req, res) {
-    Post.findOne({ where: { id: req.params.id } })
-      .then((posts) => res.status(200).json(posts))
-      .catch((error) => res.status(400).json({ error }));
+  async getOnePost(req, res) {
+    try {
+    const comments = await Post.findAll({ where: { post_id: req.params.id } });
+    const post = await Post.findOne({ where: { id: req.params.id } });
+      return res.status(200).json({ post, comments });
+    } catch (error) {
+      console.log(error.message);
+      return res.status(400).json({ error });
+    }
   },
   deletePost(req, res) {
     Post.findOne({ where: { id: req.params.id } })

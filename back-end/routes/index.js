@@ -14,7 +14,9 @@ module.exports = (app) => {
 
     app.post('/login', userController.login);
 
-    app.delete('/user/delete/:id', userController.deleteUser);
+    app.delete('/user/delete/:id', auth, userController.deleteUser);
+
+    app.get('/user/infos', auth, userController.userInfos)
 
     // post's routes
     app.post('/post/create', auth, multer, postController.createPost);
