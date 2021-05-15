@@ -4,7 +4,8 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/posts">Posts</router-link> |
       <router-link to="/login">Login</router-link> | 
-      <router-link to="/signup">Sign Up</router-link>
+      <router-link to="/signup">Sign Up</router-link> |
+      <router-link to="/profile">Profile</router-link>
     </div>
     <img src="./assets/logo-groupomania.png" alt="logo groupomania" id="logo">
     <router-view/>

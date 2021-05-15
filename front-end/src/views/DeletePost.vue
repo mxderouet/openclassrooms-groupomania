@@ -26,7 +26,7 @@ export default {
     <h1>Are you sure you want to delete this post?</h1>
     <p>This action is irreversible</p>
     <button><router-link to="/posts">No, go back to posts</router-link></button>
-    <br />
+    <br>
     <button v-on:click.prevent="deletePost">
       Yes, delete posts
     </button>

@@ -8,6 +8,8 @@ import Posts from '../views/Posts.vue'
 import CreatePost from '../views/CreatePost.vue'
 import EditPost from '../views/EditPost.vue'
 import DeletePost from '../views/DeletePost.vue'
+import Profile from '../views/Profile.vue'
+import DeleteProfile from '../views/DeleteProfile.vue'
 
 Vue.use(VueRouter)
 
@@ -51,6 +53,16 @@ const routes = [
     path: '/post/delete/:id',
     name: 'DeletePost',
     component: DeletePost
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
+  },
+  {
+   path: '/profile/delete',
+   name: 'DeleteProfile',
+   component: DeleteProfile
   }
 ]
 

@@ -18,7 +18,7 @@ export default {
         this.posts = response.data;
       })
       .catch((error) => {
-        console.log(error.message)
+        console.log(error.message);
         if (error.response.status === 401) {
           this.$router.push({ name: "Login" });
         }
@@ -34,19 +34,21 @@ export default {
       <button><router-link to="/create">Create your post</router-link></button>
     </div>
     <div v-for="post in posts" :key="post.id">
-      <h2>{{ post.subject }}</h2>
-      <p>
-        {{ post.text }}
-      </p>
-      <img :src="post.image" />
-      <p>
-        Post <strong>#{{ post.post_id }}</strong>
-        <br />
-        Written by: {{ post.userId }}
-        <br />
-        Created at: {{ post.createdAt }}
-      </p>
-      <router-link :to="'/post/get/' + post.id">See post details</router-link>
+      <div v-if="post.post_id === 0">
+        <h2>{{ post.subject }}</h2>
+        <p>
+          {{ post.text }}
+        </p>
+        <img :src="post.image">
+        <p>
+          Post <strong>#{{ post.id }}</strong>
+          <br>
+          Written by: {{ post.userId }}
+          <br>
+          Created at: {{ post.createdAt }}
+        </p>
+        <router-link :to="'/post/get/' + post.id">See post details</router-link>
+      </div>
     </div>
   </div>
 </template>

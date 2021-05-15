@@ -1,6 +1,7 @@
 // ./components/PostDetail.vue
 <script>
 const axios = require("axios");
+const token = localStorage.getItem("token");
 export default {
   name: "PostDetail",
   data() {
@@ -9,13 +10,12 @@ export default {
       userId: 0,
       post: {
         subject: "",
-        text: "",
+        text: ""
       },
-      comments: []
+      comments: [],
     };
   },
   mounted() {
-    const token = localStorage.getItem("token");
     axios
       .get('http://localhost:3000/user/infos', { headers: { Authorization: `Bearer ${token}` } })
       .then((response) => {
@@ -24,6 +24,8 @@ export default {
     const userId = localStorage.getItem("userId");
     this.userId = userId;
     const id = this.$route.params.id;
+    // set an id that will be used to associate a post and its reply
+    localStorage.setItem("commentId", id);
     const url = `http://localhost:3000/post/get/${id}`;
     axios
       .get(url, { headers: { Authorization: `Bearer ${token}` } })
@@ -47,7 +49,7 @@ export default {
     <p>
       {{ post.text }}
     </p>
-    <img :src="post.image" />
+    <img :src="post.image" alt="post image">
     <p>
       Post <strong>#{{ post.id }}</strong>
       <br>
@@ -61,9 +63,18 @@ export default {
 		<br>
     <button v-if="userInfos.isAdmin || userId === post.userId"><router-link :to="'/post/delete/' + post.id">Delete post</router-link></button>
     <div v-for="comment in comments" :key="comment.id">
-      <p>
+      <h2>
         {{ comment.subject }}
+      </h2>
+      <p>
+        {{ comment.text }} 
       </p>
+      <img :src="comment.image" alt="comment image">
+        <p>
+          Reply by: {{ comment.userId }}
+          <br>
+          Created at: {{ comment.createdAt }}
+        </p>
     </div>
   </div>
 </template>

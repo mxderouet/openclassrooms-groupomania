@@ -14,7 +14,11 @@
       methods: {
         createPost(){
           var formData = new FormData();
-          const token = localStorage.getItem('token');
+          const token = localStorage.getItem("token");
+          const commentId = localStorage.getItem("commentId");
+          // use commentId if it's a reply or set it to 0 if it's an original post
+          formData.append("post_id", commentId ? commentId : 0);
+          localStorage.removeItem("commentId");
           formData.append("subject", this.form.subject);
           formData.append("text", this.form.text);
           formData.append("image", this.$refs.userfile.files[0]);

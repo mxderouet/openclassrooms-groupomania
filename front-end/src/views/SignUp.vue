@@ -31,7 +31,7 @@
 
 <template>
     <div>
-            <h2> Contact US </h2>
+            <h2> Create your account</h2>
             <form v-on:submit.prevent="submitForm">
                 <div class="form-group">
                     <label for="firstname">Firstname: </label>

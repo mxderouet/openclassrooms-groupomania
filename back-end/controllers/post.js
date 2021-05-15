@@ -1,13 +1,10 @@
 const Post = require("../models").Post;
 const fs = require("fs");
 
-let postCount = 0;
-
 module.exports = {
   async createPost(req, res) {
     const post = req.body;
     try {
-      // const postCount = Object.keys(await Post.findAll()).length;
       await Post.create({
         userId: req.userId,
         subject: post.subject,
@@ -15,7 +12,7 @@ module.exports = {
         image: `${req.protocol}://${req.get("host")}/images/${
           req.file.filename
         }`,
-        post_id: 0
+        post_id: post.post_id
       });
 
       res.status(201).json({ message: "Post created!" });

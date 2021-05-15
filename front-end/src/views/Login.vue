@@ -13,6 +13,7 @@
       },
       methods: {
         login(){
+          localStorage.clear();
           axios.post('http://localhost:3000/login', this.form)
             .then((res) => {
               this.$router.push({ name: 'Posts' })
