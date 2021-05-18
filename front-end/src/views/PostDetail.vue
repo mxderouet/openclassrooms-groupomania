@@ -13,6 +13,7 @@ export default {
         text: ""
       },
       comments: [],
+      allUsers: [],
       userName: ""
     };
   },
@@ -33,7 +34,8 @@ export default {
       .then((response) => {
         this.post = response.data.post;
         this.comments = response.data.comments;
-        this.userName = response.data.userName;
+        this.allUsers = response.data.allUsers;
+        this.userName = response.data.userName ? response.data.userName : 'anonymous user';
       })
       .catch((error) => {
         console.log(error.message);
@@ -55,7 +57,7 @@ export default {
     <p>
       Post <strong>#{{ post.id }}</strong>
       <br>
-      Written by: {{ userName || "anonymous user" }}
+      Written by: {{ userName || "deleted user" }}
       <br>
       Created at: {{ post.createdAt }}
     </p>
@@ -73,7 +75,7 @@ export default {
       </p>
       <img :src="comment.image" alt="comment image">
         <p>
-          Reply by: {{ comment.userId }}
+          Reply by: {{ allUsers[comment.userId - 1].first_name || 'anonymous user' }}
           <br>
           Created at: {{ comment.createdAt }}
         </p>

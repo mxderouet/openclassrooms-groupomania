@@ -22,7 +22,7 @@
               localStorage.setItem('userId', res.data.userId)
               console.log('Logged in!')
               })
-            .catch((error) => { console.log(error) })
+            .catch((error) => { console.log(error.message) })
         }
       }
     }

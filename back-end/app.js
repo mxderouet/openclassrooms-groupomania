@@ -1,11 +1,23 @@
 require('dotenv').config()
 
 const express = require('express');
+const helmet = require('helmet');
 const logger = require('morgan');
-// const userRoutes = require('./routes/user');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
+
+const limiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // 60 minutes
+    max: 1000 // limit each IP to 100 requests per windowMs
+});
 
 const app = express();
+
+// protection against HTTP headers vulnerabilities
+app.use(helmet());
+
+// apply to all requests
+app.use(limiter);
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -29,6 +41,5 @@ models.sequelize.sync().then(function() {
 require('./routes')(app);
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
-// app.use('/api/auth', userRoutes);
 
 module.exports = app;

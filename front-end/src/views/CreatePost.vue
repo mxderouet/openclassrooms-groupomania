@@ -18,7 +18,6 @@
           const commentId = localStorage.getItem("commentId");
           // use commentId if it's a reply or set it to 0 if it's an original post
           formData.append("post_id", commentId ? commentId : 0);
-          localStorage.removeItem("commentId");
           formData.append("subject", this.form.subject);
           formData.append("text", this.form.text);
           formData.append("image", this.$refs.userfile.files[0]);
@@ -34,6 +33,7 @@
               .then(() => { 
                 this.$router.push({ name: 'Posts' })
                 console.log('Post created!')
+                localStorage.removeItem("commentId");
               })
             .catch((error) => { console.log(error.message) })
         }
@@ -43,9 +43,9 @@
 
 <template>
   <div class="create-post">
-    <h1>Create your post here</h1>
+    <h1>Create a post or a reply here</h1>
     <p>
-        Feel free to share with the community what is on your mind to day
+        Feel free to share with the community what is on your mind today
     </p>
         <form v-on:submit.prevent="createPost" enctype="multipart/form-data">
         <div class="form-group">

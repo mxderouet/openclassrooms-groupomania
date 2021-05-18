@@ -29,14 +29,12 @@ module.exports = {
   },
   async getOnePost(req, res) {
     try {
-    const comments = await Post.findAll({ where: { post_id: req.params.id } });
+    const comments = await Post.findAll({ where: { post_id: req.params.id }, include: [ { model: User, as: "User"} ] });
     const post = await Post.findOne({ where: { id: req.params.id }, include: [ { model: User, as: User } ] });
-    // const userName = await Post.findAll({ where: { id: req.params.id }, include: [ { model: User, as: "User"} ] });
-    // console.log(post.userId);
-    const userName = await User.findOne({ where: { id: post.userId }});
-    console.log(userName);
-
-      return res.status(200).json({ post, comments, userName: userName.first_name });
+    const allUsers = await User.findAll()
+    const user = await User.findOne({ where: { id: post.userId }});
+    const userFirstName = user === null ? 'deleted user ' : user.first_name;
+      return res.status(200).json({ post, comments, allUsers, userName: userFirstName });
     } catch (error) {
       console.log(error.message);
       return res.status(400).json({ error });

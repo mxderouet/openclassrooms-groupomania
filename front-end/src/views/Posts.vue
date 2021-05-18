@@ -14,8 +14,8 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        console.log(response.data);
-        this.posts = response.data;
+        this.posts = response.data.reverse();
+        localStorage.removeItem("commentId");
       })
       .catch((error) => {
         console.log(error.message);
@@ -42,8 +42,6 @@ export default {
         <img :src="post.image">
         <p>
           Post <strong>#{{ post.id }}</strong>
-          <br>
-          Written by: {{ post.userId }}
           <br>
           Created at: {{ post.createdAt }}
         </p>

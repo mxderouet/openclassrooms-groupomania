@@ -11,9 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      console.log("////////////////////////////////////////")
-      console.log(models)
-      console.log("////////////////////////////////////////")
       // define association here
       this.myAssociation = models.Post.belongsTo(models.User);
     }
