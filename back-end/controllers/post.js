@@ -1,4 +1,5 @@
 const Post = require("../models").Post;
+const User = require("../models").User;
 const fs = require("fs");
 
 module.exports = {
@@ -29,8 +30,13 @@ module.exports = {
   async getOnePost(req, res) {
     try {
     const comments = await Post.findAll({ where: { post_id: req.params.id } });
-    const post = await Post.findOne({ where: { id: req.params.id } });
-      return res.status(200).json({ post, comments });
+    const post = await Post.findOne({ where: { id: req.params.id }, include: [ { model: User, as: User } ] });
+    // const userName = await Post.findAll({ where: { id: req.params.id }, include: [ { model: User, as: "User"} ] });
+    // console.log(post.userId);
+    const userName = await User.findOne({ where: { id: post.userId }});
+    console.log(userName);
+
+      return res.status(200).json({ post, comments, userName: userName.first_name });
     } catch (error) {
       console.log(error.message);
       return res.status(400).json({ error });

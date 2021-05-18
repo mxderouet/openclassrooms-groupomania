@@ -13,6 +13,7 @@ export default {
         text: ""
       },
       comments: [],
+      userName: ""
     };
   },
   mounted() {
@@ -32,6 +33,7 @@ export default {
       .then((response) => {
         this.post = response.data.post;
         this.comments = response.data.comments;
+        this.userName = response.data.userName;
       })
       .catch((error) => {
         console.log(error.message);
@@ -53,7 +55,7 @@ export default {
     <p>
       Post <strong>#{{ post.id }}</strong>
       <br>
-      Written by: {{ post.userId }}
+      Written by: {{ userName || "anonymous user" }}
       <br>
       Created at: {{ post.createdAt }}
     </p>

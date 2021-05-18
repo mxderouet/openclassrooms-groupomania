@@ -1,4 +1,5 @@
 'use strict';
+const User = require("../models").User;
 const {
   Model
 } = require('sequelize');
@@ -10,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      console.log("////////////////////////////////////////")
+      console.log(models)
+      console.log("////////////////////////////////////////")
       // define association here
       this.myAssociation = models.Post.belongsTo(models.User);
     }
@@ -39,5 +43,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Post',
   });
+  // Post.belongsTo(models.User);
   return Post;
 };

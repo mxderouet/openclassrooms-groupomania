@@ -6,7 +6,6 @@ export default {
   name: "DeletePost",
   methods: {
     async deletePost(){
-      console.log(this.$route.params.id);
       try {
         const res = await axios.delete(`http://localhost:3000/post/delete/${this.$route.params.id}`, { 
           headers: { Authorization: `Bearer: ${token}` },

@@ -6,7 +6,6 @@ export default {
   name: "DeleteProfile",
   methods: {
     async deleteProfile(){
-      console.log(this.$route.params.id);
       try {
         const userId = localStorage.getItem("userId");
         const res = await axios.delete(`http://localhost:3000/user/delete/${userId}`, { 
