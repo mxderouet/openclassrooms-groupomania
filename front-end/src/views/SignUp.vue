@@ -15,7 +15,6 @@
       },
       methods: {
         submitForm(submitEvent){
-          console.log('form:', this.form)
           console.log('submitEvent:', submitEvent)
           axios.post('http://localhost:3000/signup', this.form)
             .then((res) => { console.log(res) })

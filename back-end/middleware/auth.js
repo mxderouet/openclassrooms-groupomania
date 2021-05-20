@@ -7,7 +7,6 @@ module.exports = (req, res, next) => {
     // we check that the Token is the same with the secret key
     const decodedToken = jwt.verify(token, process.env.TOKEN);
     const userId = decodedToken.userId;
-    console.log('userId =' + userId);
     if (req.body.userId && req.body.userId !== userId) {
       throw 'Invalid user ID';
     } else {

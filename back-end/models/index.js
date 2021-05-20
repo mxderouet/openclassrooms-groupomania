@@ -36,6 +36,4 @@ db.Sequelize = Sequelize;
 
 module.exports = db;
 
-// Sequelize table & model creation
-// sequelize model:create --name User --attributes id:string,first_name:string,last_name:string,email:string,password:string
 

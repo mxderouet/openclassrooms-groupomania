@@ -40,6 +40,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Post',
   });
-  // Post.belongsTo(models.User);
   return Post;
 };

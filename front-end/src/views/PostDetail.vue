@@ -63,6 +63,7 @@ export default {
     </p>
     <button><router-link to="/create">Reply to post</router-link></button>
 		<br>
+    <!-- check for admin rights or if user is post's author -->
     <button v-if="userInfos.isAdmin || userId === post.userId"><router-link :to="'/post/edit/' + post.id">Edit post</router-link></button>
 		<br>
     <button v-if="userInfos.isAdmin || userId === post.userId"><router-link :to="'/post/delete/' + post.id">Delete post</router-link></button>

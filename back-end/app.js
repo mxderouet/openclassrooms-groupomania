@@ -16,7 +16,7 @@ const app = express();
 // protection against HTTP headers vulnerabilities
 app.use(helmet());
 
-// apply to all requests
+// apply limiter to all requests
 app.use(limiter);
 
 app.use(logger('dev'));

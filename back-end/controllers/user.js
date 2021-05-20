@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
 	async register(req, res) {
-			const password = req.body.password;    
+			const password = req.body.password;
+			// hash password with bcrypt for security reasons    
 			const encryptedPassword = await bcrypt.hash(password, saltRounds)
 			try {
 				await User.create({
@@ -34,6 +35,7 @@ module.exports = {
 			bcrypt.compare(req.body.password, user.password)
 				.then(valid => {
 					if (!valid) {
+						// limited error message on purpose
 						return res.status(401).json({ error: 'Wrong credentials!' });
 					}
 					res.status(200).json({

@@ -9,7 +9,7 @@ module.exports = {
       await Post.create({
         userId: req.userId,
         subject: post.subject,
-        text: post.text ?? undefined,
+        text: post.text || undefined,
         image: `${req.protocol}://${req.get("host")}/images/${
           req.file.filename
         }`,
@@ -58,7 +58,7 @@ module.exports = {
     const postEdited = {
       userId: req.userId,
       subject: post.subject,
-      text: post.text ?? undefined,
+      text: post.text || undefined,
       image: `${req.protocol}://${req.get("host")}/images/${
         req.file.filename
       }`

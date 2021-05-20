@@ -23,7 +23,6 @@ const migrationCommands = (transaction) => [
       {
         type: Sequelize.INTEGER,
         field: "id",
-        primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
@@ -41,7 +40,6 @@ const rollbackCommands = (transaction) => [
       {
         type: Sequelize.INT,
         field: "id",
-        primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
