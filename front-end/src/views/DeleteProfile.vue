@@ -3,6 +3,9 @@
 const axios = require('axios');
 const token = localStorage.getItem("token");
 export default {
+  metaInfo() {
+    return { title: 'Groupomania - Delete profile' }
+  },
   name: "DeleteProfile",
   methods: {
     async deleteProfile(){

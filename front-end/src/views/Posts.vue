@@ -2,8 +2,10 @@
 <script>
 const axios = require("axios");
 export default {
-  name: "PostDetail",
-
+  metaInfo() {
+    return { title: 'Groupomania - Latest posts' }
+  },
+  name: "Posts",
   data() {
     return { posts: [] };
   },

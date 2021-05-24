@@ -3,6 +3,9 @@
 const axios = require('axios');
 const token = localStorage.getItem("token");
 export default {
+  metaInfo() {
+    return { title: 'Groupomania - Your profile' }
+  },
   name: "Profile",
   data() {
     return {

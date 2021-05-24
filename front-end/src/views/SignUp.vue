@@ -2,6 +2,9 @@
 <script>
     const axios = require('axios');
     export default {
+      metaInfo() {
+        return { title: 'Groupomania - Sign up' }
+      },
       name: 'SignUp',
         data() { 
         return { 

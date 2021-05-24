@@ -10,6 +10,9 @@
 <script>
 
 export default {
+  metaInfo() {
+    return { title: 'Groupomania - Welcome to Groumpomania network' }
+  },
   name: 'Home',
   components: {
   }
