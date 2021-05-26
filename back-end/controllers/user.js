@@ -30,7 +30,7 @@ module.exports = {
 			User.findOne({where: { email: req.body.email }})
 		.then(user => {
 			if (!user) {
-				return res.status(401).json({ error: 'User not found!' });
+				return res.status(401).json({ error: 'Wrong credentials!' });
 			}
 			bcrypt.compare(req.body.password, user.password)
 				.then(valid => {
@@ -63,6 +63,7 @@ module.exports = {
 				return res.status(401).json({ error: 'User not found!' });
 			}
 			return res.status(200).json({ 
+				id: user.id,
 				first_name: user.first_name, 
 				last_name: user.last_name, 
 				email: user.email, 

@@ -1,6 +1,7 @@
 const Post = require("../models").Post;
 const User = require("../models").User;
 const fs = require("fs");
+const jwt = require('jsonwebtoken');
 
 module.exports = {
   async createPost(req, res) {
@@ -40,20 +41,33 @@ module.exports = {
       return res.status(400).json({ error });
     }
   },
-  deletePost(req, res) {
-    Post.findOne({ where: { id: req.params.id } })
-      .then((post) => {
-        if (post.imageUrl) {
-          const filename = post.imageUrl.split("/images/")[1];
-          fs.unlink(`images/${filename}`);
-        }
-        Post.destroy({ where: { id: req.params.id } })
-          .then(() => res.status(200).json({ message: "Post deleted!" }))
-          .catch((error) => res.status(400).json({ error }));
-      })
-      .catch((error) => res.status(400).json({ error }));
+  async deletePost(req, res) {
+    // check for admin rights or userId 
+    const decodedToken = jwt.verify(token, process.env.TOKEN);
+    const userId = decodedToken.userId;
+    const user = await User.findOne({where: { id: req.token.userId }})
+    if (userId === user.id || user.isAdmin === 1) {
+      Post.findOne({ where: { id: req.params.id } })
+        .then((post) => {
+          if (post.imageUrl) {
+            const filename = post.imageUrl.split("/images/")[1];
+            fs.unlink(`images/${filename}`);
+          }
+          Post.destroy({ where: { id: req.params.id } })
+            .then(() => res.status(200).json({ message: "Post deleted!" }))
+            .catch((error) => res.status(400).json({ error }));
+        })
+        .catch((error) => res.status(400).json({ error }));
+    } else {
+      res.status(401).json("Unauthorized");
+    }
   },
   async editPost(req, res) {
+    const token = req.headers.authorization.split(' ')[1];
+    // we check that the Token is the same with the secret key
+    const decodedToken = jwt.verify(token, process.env.TOKEN);
+    const userId = decodedToken.userId;
+    const user = await User.findOne({where: { id: req.token.userId }})
     const post = req.body;
     const postEdited = {
       userId: req.userId,
@@ -63,11 +77,16 @@ module.exports = {
         req.file.filename
       }`
     };
-    try {
-      await Post.update(postEdited, { where: { id: req.params.id }})
-      res.status(200).json({ message: "Object modified!" })
-    } catch(error) {
-      res.status(400).json({ error });
+    // check for admin rights or userId 
+    if (userId === user.id || user.isAdmin === 1) {
+      try {
+        await Post.update(postEdited, { where: { id: req.params.id }})
+        res.status(200).json({ message: "Object modified!" })
+      } catch(error) {
+        res.status(400).json({ error });
+      }
+    } else {
+      res.status(401).json("Unauthorized");
     }
   },
 };
